@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useEffect,useState } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
@@ -37,9 +37,11 @@ const DetailProduct = () => {
               <p>{product.description}</p>
               <p className="text-orange-500">Rs.{product.price}</p>
               <div className="buttons">
+                <Link to="/cart">
                 <button className="shadow-md p-[5px] mb-[20px] mt-[10px] text-white rounded-md bg-orange-600 hover:mt-[-5px]">
                   Buy Now
                 </button>
+                </Link>
                 <button
                   onClick={() => dispatch(addToCart(product))}
                   className="shadow-md p-[5px] mb-[20px] ml-[10px] mt-[10px] text-white rounded-md bg-orange-600"
