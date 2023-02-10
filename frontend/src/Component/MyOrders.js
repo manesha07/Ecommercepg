@@ -1,68 +1,35 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import * as notify from "../utils/notify.js"
+import axios from "axios";
 
 import { useState, useEffect } from "react";
-import { authService } from "../authentication/authentication";
 
 let cartTotal = 0;
 let shippingTotal = 0;
 let total = 0;
 
-const Cart = () => {
+const MyOrders = () => {
   const navigate = useNavigate();
-  const products = JSON.parse(localStorage.getItem("cart"))
+  const [products, setProducts] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"))
 
-  console.log("cart items,",products)
+  console.log("ordered items,",products)
+  console.log("ordereuser,",user.id)
 
-  const cartCount = useSelector((state) => {
-    console.log("this is nav state", state.cart.count);
-    return state.cart.count;
-  });
-  // const [currentUser, setCurrentUser] = useState(undefined);
-  // console.log("currenttt", currentUser);
 
-  // useEffect(() => {
-  //   const user = authService.getCurrentUser();
-  //   console.log("userla", user);
-
-  //   if (user) {
-  //     setCurrentUser(user.currentUser);
-  //   }
-  // }, []);
-
-  const handleCheckout = (e) => {
-    fetch(`${process.env.REACT_APP_API_URL}/orders/${user.id}`, {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({user_id:user.id,order_items:JSON.stringify(products),total_order_amount:Math.floor(total)}),
-    })
-      .then((response) => response.json())
+  useEffect( () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/orders/${user.id}`)
       .then((data) => {
- // if data is received then the order is successful otherwise error is thrown
-        if (data.data.token) {
-          notify.success("placed of Orders")
-          navigate("/");
-          window.location.reload();
-        }
-        else{
-          console.log("error order",data)
-          notify.error(data.details)
-        }
+        console.log("yo data", JSON.parse(data.data.data.orderItems));
+        setProducts(JSON.parse(data.data.data.orderItems));
       })
-      .catch((error) => {
-        notify.error(error)
-      });
-  }
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <>{products && user  ? <div>
-      <p className="text-[40px]">Cart Items({cartCount})</p>
+      <p className="text-[40px]">My Orders</p>
       <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
@@ -117,17 +84,12 @@ const Cart = () => {
             </div>
           </div>
         </div>
-        {(total === 0) ? <h1> Please add to 
-          Cart
-        </h1> :    
-         <button class=" bg-gray-800 text-white " onClick={handleCheckout}>
-          Click here to Proceed to Checkout
-        </button>}
-
+   
       </div>
 
       <hr />
-
+      {/* {(total === 0) ? <h1> Sorry,there are no Orders */}
+        {/* </h1> :  */}
       <div className="flex flex-wrap">
         {products &&
           products.slice(0, 10).map((item) => {
@@ -158,10 +120,10 @@ const Cart = () => {
       </div>
       </div>: 
       <div>
-        <p>No products on cart</p>
+        <p>Sorry ,there are no Orders yet.</p>
       </div>}
     </>
   );
-};
+}
 
-export default Cart;
+export default MyOrders;

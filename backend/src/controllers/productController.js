@@ -6,7 +6,9 @@ export function createProduct(req, res, next) {
 
   productService
     .createProduct(req.body)
-    .then((data) => res.json(data))
+    .then((data) => 
+    {("conteroller",typeof(data))
+      res.json(data)})
     .catch((err) => next(err));
 }
 
@@ -27,7 +29,7 @@ export function getAllProducts(req, res, next) {
 
   productService
     .getAllProducts(pageNumber, itemsPerPage)
-    .then((data) => res.json(data))
+    .then((data) =>     {console.log(res.json(data))})
     .catch((err) => next(err));
 }
 
@@ -37,7 +39,7 @@ export function getProductDetails(req, res, next) {
   const product = req.params.id;
   productService
     .getProductDetails(req.params.id)
-    .then((data) => res.json(data))
+    .then((data) =>     {console.log(res.json(data))})
     .catch((err) => next(err));
 }
 
@@ -46,7 +48,7 @@ export function getProductDetails(req, res, next) {
 export function updateProduct(req, res, next) {
   productService
     .updateProduct(req.params.id, req.body)
-    .then((data) => res.json(data))
+    .then((data) =>     {console.log(res.json(data))})
     .catch((err) => next(err));
 }
 
@@ -55,6 +57,6 @@ export function updateProduct(req, res, next) {
 export function deleteProduct(req, res, next) {
   productService
     .deleteProduct(req.params.id)
-    .then((data) => res.json(data))
+    .then((data) =>     {console.log(res.json(data))})
     .catch((err) => next(err));
 }

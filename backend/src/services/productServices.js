@@ -5,12 +5,25 @@ import Product from "../models/product.js";
 //Create Product-- only for Admin
 export async function createProduct(data) {
   const insertedData = await new Product().save(data);
-
+ console.log("typeof",insertedData, typeof(insertedData))
   return {
     data: insertedData,
     message: "Added Product sucessfully",
   };
 }
+// typeof [
+//   {
+//     id: 50,
+//     name: 'epooddfff',
+//     description: 'ered',
+//     category: 'dr',
+//     images: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+//     stock: 45,
+//     createdAt: 2023-02-10T04:45:07.578Z,
+//     updatedAt: 2023-02-10T04:45:07.578Z,
+//     price: 45
+//   }
+// ] 
 
 // //********************     Get all products   ********************//
 // export async function getAllProducts() {
