@@ -1,16 +1,42 @@
 import * as productService from "../services/productServices.js";
+import multer from "multer";
+
+
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./uploads");
+  },
+  filename: (req, file, cb) => {
+    // cb(null, `${Date.now()}-${file.originalname}`);
+     cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+// //Create Product-- only for Admin
+// export function createProduct(req, res, next) {
+//   const product = req.body;
+
+//   productService
+//     .createProduct(req.body)
+//     .then((data) => res.json(data))
+//     .catch((err) => next(err));
+// }
+
+
 
 //Create Product-- only for Admin
 export function createProduct(req, res, next) {
   const product = req.body;
 
   productService
-    .createProduct(req.body)
-    .then((data) => 
-    {("conteroller",typeof(data))
-      res.json(data)})
+    .createProduct({ ...req.body, images: req.file.filename })
+    .then((data) => res.json(data))
     .catch((err) => next(err));
 }
+
+export const uploadImage = upload.single("image");
 
 // export function getAllProducts(req, res, next) {
 //   const product = req.params;

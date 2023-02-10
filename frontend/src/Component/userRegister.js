@@ -6,7 +6,9 @@ import * as notify from "../utils/notify.js"
 import authHeader from '../authentication/authHeader.js';
 import { useNavigate } from 'react-router-dom';
 
-const Register = () => {
+
+// component to display Register for User
+const Register = () => { 
   const [fullname,setFullname] = useState("");
   const [username,setUsername] = useState("");
   const [email,setEmail] = useState("");
@@ -15,28 +17,34 @@ const Register = () => {
   const navigate = useNavigate();
 
     const handleSubmit = (event) => {
+      // Event handler for submitting the form
       event.preventDefault();
-      if(password !== repassword)
-      {console.log("error")} 
+      if (password !== repassword) {
+        console.log("error");
+      }
       fetch(`${process.env.REACT_APP_API_URL}/userRegister`, {
-        method: 'POST', // or 'PUT'
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({name:fullname,username:username,password:password,email:email}),
+        method: "POST", // or 'PUT'
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: fullname,
+          username: username,
+          password: password,
+          email: email,
+        }),
       })
         .then((response) => response.json())
         .then((data) => {
-          if(!data.details){
+          if (!data.details) {
             console.log("Success:", data);
-            notify.success("registered");
+            notify.success("registered"); // Show a success notification
             navigate("/");
-          }
-          else{
-            notify.error(data.details)
+          } else {
+            notify.error(data.details);
           }
         })
         .catch((error) => {
-          notify.error(error)
-          console.error('Error:', error);
+          notify.error(error);
+          console.error("Error:", error); // Show an error notification with the error message
         });
     }
 

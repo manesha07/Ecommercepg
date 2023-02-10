@@ -6,39 +6,42 @@ import authHeader from "../authentication/authHeader.js";
 
 //checkoutform is diaplayed when the user orders the items/products
 const CheckoutForm = () => {
-  const [fullname, setFullname] = useState("");
-  const [email, setEmail] = useState("");
-    const [address, setAddress] = useState("");
-    const [phone, setPhone] = useState("");
- 
+  const [fullname, setFullname] = useState(""); // State for storing the full name of the user
+  const [email, setEmail] = useState(""); // State for storing the email of the user
+  const [address, setAddress] = useState(""); // State for storing the address of the user
+  const [phone, setPhone] = useState(""); // State for storing the phone of the user
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-   
+    // Event handler for submitting the form
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    // Send a POST request to the server with the form data
     fetch(`${process.env.REACT_APP_API_URL}/userRegister/Checkout`, {
-      method: "POST", // or 'PUT'
+      method: "POST", // or 'PUT'      // The HTTP method for sending the request
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json", // Specifying the request body type
       },
       body: JSON.stringify({
+        // Stringify the form data as a JSON object
         name: fullname,
-        address:address,
-        phone:phone,
+        address: address,
+        phone: phone,
         email: email,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (!data.details) {
+          // Check if the request was successful
           console.log("Success:", data);
-          notify.success("Ordered");
+          notify.success("Ordered"); // Show a success notification
         } else {
-          notify.error(data.details);
+          notify.error(data.details); // Show an error notification with the error message
         }
       })
       .catch((error) => {
         notify.error(error);
-        console.error("Error:", error);
+        console.error("Error:", error); // Show an error notification with the error message
       });
   };
 
