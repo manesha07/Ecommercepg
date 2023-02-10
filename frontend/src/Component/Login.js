@@ -27,8 +27,8 @@ const Login = () => {
           localStorage.setItem("user", JSON.stringify(data.data.user));
           localStorage.setItem("token", JSON.stringify(data.data.token));
           notify.success("Login")
-          // navigate("/");
-          // window.location.reload();
+          navigate("/");
+          window.location.reload();
         }
         else{
           console.log("login admin",data)

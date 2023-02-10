@@ -13,7 +13,6 @@ let total = 0;
 
 const Cart = () => {
   const navigate = useNavigate();
-  const products = JSON.parse(localStorage.getItem("cart"))
   const user = JSON.parse(localStorage.getItem("user"))
 
   const products = JSON.parse(localStorage.getItem("cart")); // Get cart items from local storage
