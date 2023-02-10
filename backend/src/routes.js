@@ -3,6 +3,7 @@ import {Router} from 'express';
 import * as adminController from "./controllers/adminController.js";
 import * as userController from "./controllers/userController.js";
 import * as productController from "./controllers/productController.js";
+import * as orderController from "./controllers/orderController.js";
 import addAdminSchema from "./schemas/addAdmin.js";
 import addUserSchema from "./schemas/addUser.js";
 import addProductSchema from "./schemas/addProduct.js";
@@ -58,7 +59,11 @@ router.post(
 
   router.delete("/products/:id", authenticate,productController.deleteProduct);
 
-  router.get("/cart", productController.deleteProduct);
+  router.get("/orders/:id", orderController.getAllOrders);
+
+  router.post("/orders/:id", orderController.createOrders);
+
+  router.delete("/orders/:id", orderController.deleteOrder);
 
 
 export default router;

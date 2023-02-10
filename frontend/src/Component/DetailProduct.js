@@ -1,31 +1,31 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useEffect,useState } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import {useSelector,useDispatch} from "react-redux"
 import {addToCart} from "../redux/cartSlice.js"
-import * as productServices from "../services/index.js"
+import * as productServices from "../services/index.js";
+import { Link, useNavigate } from 'react-router-dom';
 
 
 //Detail of product is displayed with the help of id from the useParams hook
 
 const DetailProduct = () => {
-  const { id } = useParams(); // get the id of the selected product from the URL
-  console.log("this is iddetail product", id);
-  const [product, setProduct] = useState(""); // state to store the details of the product
-  const dispatch = useDispatch(); // hook for dispatching actions to the store
+    const {id} = useParams();
+    console.log("this is iddetail product",id)
+    const [product,setProduct] =useState("");
+    const dispatch = useDispatch();
+    const userStorage = JSON.parse(localStorage.getItem("user"));
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/products/${id}`) //
-      // Using useEffect hook to fetch data of the Product with the given id
-      .then((res) => res.json())
-      .then((res) => {
-        console.log("this", res);
-        setProduct(res.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+    useEffect(()=>{
+        fetch(`${process.env.REACT_APP_API_URL}/products/${id}`)
+        .then(res => res.json())
+        .then(res => {
+          console.log("this",res)
+          setProduct(res.data)})
+        .catch(err => console.error(err))
+    },[])
 
   return (
     <>
@@ -42,9 +42,18 @@ const DetailProduct = () => {
               <p>{product.description}</p>
               <p className="text-orange-500">Rs.{product.price}</p>
               <div className="buttons">
-                <button className="shadow-md p-[5px] mb-[20px] mt-[10px] text-white rounded-md bg-orange-600 hover:mt-[-5px]">
+                {userStorage ? <Link to = "/cart">
+                <button onClick={() => dispatch(addToCart(product))}  
+                className="shadow-md p-[5px] mb-[20px] mt-[10px] text-white rounded-md bg-orange-600 hover:mt-[-5px]">
                   Buy Now
                 </button>
+                </Link>:
+                <Link to = "/login">
+                <button 
+                className="shadow-md p-[5px] mb-[20px] mt-[10px] text-white rounded-md bg-orange-600 hover:mt-[-5px]">
+                  Buy Now
+                </button>
+                </Link>}
                 <button
                   onClick={() => dispatch(addToCart(product))}
                   className="shadow-md p-[5px] mb-[20px] ml-[10px] mt-[10px] text-white rounded-md bg-orange-600"

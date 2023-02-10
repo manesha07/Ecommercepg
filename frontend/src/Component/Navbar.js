@@ -84,8 +84,11 @@ const [showDropdown2, setShowDropdown2] = useState(false);
                 <>
                   <Link to="/cart">
                     <li className="p-[10px] hover:bg-[orange] ">
-                      {" "}
                       <Link to="/cart"> Cart({cartLength}) </Link>
+                    </li>
+                  </Link>
+                  <Link to="/myorders">
+                    <li className="p-[10px] hover:bg-[orange] "> My Orders 
                     </li>
                   </Link>
                   <Link to="/">
@@ -93,10 +96,9 @@ const [showDropdown2, setShowDropdown2] = useState(false);
                       className="p-[10px] hover:bg-[orange] "
                       onClick={logOut}
                     >
-                      {" "}
-                      Logout{" "}
+                      Logout
                     </li>
-                  </Link>{" "}
+                  </Link>
                 </>
               ) : (
                 <>
@@ -108,8 +110,7 @@ const [showDropdown2, setShowDropdown2] = useState(false);
                       onClick={logOut}
                       className="p-[10px] hover:bg-[orange] "
                     >
-                      {" "}
-                      Logout{" "}
+                      Logout
                     </li>
                   </Link>
                 </>
