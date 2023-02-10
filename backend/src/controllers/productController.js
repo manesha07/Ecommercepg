@@ -1,14 +1,42 @@
 import * as productService from "../services/productServices.js";
+import multer from "multer";
+
+
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./uploads");
+  },
+  filename: (req, file, cb) => {
+    // cb(null, `${Date.now()}-${file.originalname}`);
+     cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+// //Create Product-- only for Admin
+// export function createProduct(req, res, next) {
+//   const product = req.body;
+
+//   productService
+//     .createProduct(req.body)
+//     .then((data) => res.json(data))
+//     .catch((err) => next(err));
+// }
+
+
 
 //Create Product-- only for Admin
 export function createProduct(req, res, next) {
   const product = req.body;
 
   productService
-    .createProduct(req.body)
+    .createProduct({ ...req.body, images: req.file.filename })
     .then((data) => res.json(data))
     .catch((err) => next(err));
 }
+
+export const uploadImage = upload.single("image");
 
 // export function getAllProducts(req, res, next) {
 //   const product = req.params;
@@ -27,7 +55,7 @@ export function getAllProducts(req, res, next) {
 
   productService
     .getAllProducts(pageNumber, itemsPerPage)
-    .then((data) => res.json(data))
+    .then((data) =>     {console.log(res.json(data))})
     .catch((err) => next(err));
 }
 
@@ -37,7 +65,7 @@ export function getProductDetails(req, res, next) {
   const product = req.params.id;
   productService
     .getProductDetails(req.params.id)
-    .then((data) => res.json(data))
+    .then((data) =>     {console.log(res.json(data))})
     .catch((err) => next(err));
 }
 
@@ -46,7 +74,7 @@ export function getProductDetails(req, res, next) {
 export function updateProduct(req, res, next) {
   productService
     .updateProduct(req.params.id, req.body)
-    .then((data) => res.json(data))
+    .then((data) =>     {console.log(res.json(data))})
     .catch((err) => next(err));
 }
 
@@ -55,6 +83,6 @@ export function updateProduct(req, res, next) {
 export function deleteProduct(req, res, next) {
   productService
     .deleteProduct(req.params.id)
-    .then((data) => res.json(data))
+    .then((data) =>     {console.log(res.json(data))})
     .catch((err) => next(err));
 }

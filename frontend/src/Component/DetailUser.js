@@ -8,25 +8,28 @@ import { useSelector, useDispatch } from "react-redux";
 
 import * as userServices from "../services/index.js";
 
+// Component for displaying detail of a user
 const DetailUser = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // Component for displaying detail of a user
   console.log("this is iddetail user", id);
   const [users, setUsers] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // Using useDispatch hook to access the dispatch method
 
+  // Using useEffect hook to fetch data of the user with the given id
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/users/${id}`)
+    fetch(`${process.env.REACT_APP_API_URL}/users/${id}`) // Fetching data from the API endpoint
       .then((res) => res.json())
       .then((res) => {
         console.log("this", res);
-        setUsers(res.data);
+        setUsers(res.data); // Updating the state with the response data
       })
       .catch((err) => console.error(err));
   }, []);
 
   return (
     <>
-      
+      {" "}
+      {/* Checking if the data has been fetched and not empty */}
       {users && (
         <div className="rounded-md shadow-2xl mt-[20px]">
           <div className="user flex flex-row ">

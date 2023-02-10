@@ -3,6 +3,7 @@ import {Router} from 'express';
 import * as adminController from "./controllers/adminController.js";
 import * as userController from "./controllers/userController.js";
 import * as productController from "./controllers/productController.js";
+import * as orderController from "./controllers/orderController.js";
 import addAdminSchema from "./schemas/addAdmin.js";
 import addUserSchema from "./schemas/addUser.js";
 import addProductSchema from "./schemas/addProduct.js";
@@ -13,6 +14,7 @@ import { validateBody } from './middleware/validation.js';
 import authenticate from './middleware/authenticate.js';
 import * as dotenv from "dotenv";
 dotenv.config({path : '.env'});
+import { uploadImage } from "./controllers/productController.js";
 
 console.log("router",process.env.PORT)
 
@@ -45,18 +47,23 @@ router.post("/userRegister/checkout", userController.checkoutUser);
 router.get("/products", productController.getAllProducts);
 
 router.post(
-    "/products",
-    authenticate,
-    validateBody(addProductSchema),
-    productController.createProduct
-  );
+  "/products",
+  // authenticate,
+  // validateBody(addProductSchema),
+  uploadImage,
+  productController.createProduct
+);
   router.get("/products/:id",productController.getProductDetails);
 
   router.put("/products/:id",authenticate,validateBody(editProductSchema),productController.updateProduct);
 
   router.delete("/products/:id", authenticate,productController.deleteProduct);
 
-  router.get("/cart", productController.deleteProduct);
+  router.get("/orders/:id", orderController.getAllOrders);
+
+  router.post("/orders/:id", orderController.createOrders);
+
+  router.delete("/orders/:id", orderController.deleteOrder);
 
 
 export default router;
