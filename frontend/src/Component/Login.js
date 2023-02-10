@@ -21,13 +21,14 @@ const Login = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log("received",data)
 // if token is received then the login is successful otherwise error is thrown
         if (data.data.token) {
           localStorage.setItem("user", JSON.stringify(data.data.user));
           localStorage.setItem("token", JSON.stringify(data.data.token));
           notify.success("Login")
-          navigate("/");
-          window.location.reload();
+          // navigate("/");
+          // window.location.reload();
         }
         else{
           console.log("login admin",data)

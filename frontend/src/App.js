@@ -21,6 +21,7 @@ import { Footer } from "./Component/Footer";
 import CheckoutForm from "./Component/Checkout";
 
 import * as Sentry from "@sentry/react";
+import MyOrders from "./Component/MyOrders";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route exact path="/products/edit/:id" element={<EditProduct />} />
         <Route exact path="/users/edit/:id" element={<EditUser />} />
         <Route exact path="/cart" element={<Cart />} />
+        <Route exact path="/myorders" element={<MyOrders />} />
         <Route exact path="/checkout" element={<CheckoutForm />} />
       </Routes>
       <Footer />
