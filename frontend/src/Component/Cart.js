@@ -45,8 +45,9 @@ const Cart = () => {
       .then((response) => response.json())
       .then((data) => {
  // if data is received then the order is successful otherwise error is thrown
-        if (data.data.token) {
+        if (data) {
           notify.success("placed of Orders")
+          localStorage.removeItem('cart')
           navigate("/");
           window.location.reload();
         }

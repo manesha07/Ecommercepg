@@ -97,7 +97,7 @@ class DBModel {
 
   async getByUserId(id) {
     console.log("popp",id)
-    const [data] = await connection(this.table).select('*').where('user_id', id);
+    const data = await connection(this.table).select('*').where('user_id', id);
   console.log("yaha",data)
     return data ? camelize(data) : null;
   }

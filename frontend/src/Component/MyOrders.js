@@ -12,23 +12,31 @@ const MyOrders = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"))
-
-  console.log("ordered items,",products)
-  console.log("ordereuser,",user.id)
-
+  console.log(`${process.env.REACT_APP_API_URL}/orders/${user.id}`)
 
   useEffect( () => {
+      console.log("hioii ther re isi")
     axios
       .get(`${process.env.REACT_APP_API_URL}/orders/${user.id}`)
       .then((data) => {
-        console.log("yo data", JSON.parse(data.data.data.orderItems));
-        setProducts(JSON.parse(data.data.data.orderItems));
+        const arr=[]
+        const res = data.data.data.map((item => {
+          const obj = JSON.parse(item.orderItems)
+          obj.map((item) => arr.push(item))
+        }))
+        console.log("final array",arr)
+
+        // const filteredarr = arr.map((item) => {
+
+        // })
+        setProducts(arr);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err)});
   }, []);
 
   return (
-    <>{products && user  ? <div>
+    <>{user  ? <div>
       <p className="text-[40px]">My Orders</p>
       <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -124,6 +132,11 @@ const MyOrders = () => {
       </div>}
     </>
   );
+
+  // return (<>
+  // hii</>)
+
 }
+
 
 export default MyOrders;
