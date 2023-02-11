@@ -14,6 +14,7 @@ import { validateBody } from './middleware/validation.js';
 import authenticate from './middleware/authenticate.js';
 import * as dotenv from "dotenv";
 dotenv.config({path : '.env'});
+import { uploadImage } from "./controllers/productController.js";
 
 console.log("router",process.env.PORT)
 
@@ -46,11 +47,12 @@ router.post("/userRegister/checkout", userController.checkoutUser);
 router.get("/products", productController.getAllProducts);
 
 router.post(
-    "/products",
-    authenticate,
-    validateBody(addProductSchema),
-    productController.createProduct
-  );
+  "/products",
+  // authenticate,
+  // validateBody(addProductSchema),
+  uploadImage,
+  productController.createProduct
+);
   router.get("/products/:id",productController.getProductDetails);
 
   router.put("/products/:id",authenticate,validateBody(editProductSchema),productController.updateProduct);

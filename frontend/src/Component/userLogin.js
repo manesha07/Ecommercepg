@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import * as notify from "../utils/notify.js"
 import authHeader from '../authentication/authHeader.js';
 
+// component to display login for User
 const Login = () => {
   const [username,setUsername] =useState("");
   const [password,setPassword] =useState("");
@@ -11,27 +12,28 @@ const Login = () => {
   const user = JSON.parse(localStorage.getItem("token"));
   console.log("user yei ho",user)
   const handleSubmit = (event) => {
+    // Event handler for submitting the form
     event.preventDefault();
     fetch(`${process.env.REACT_APP_API_URL}/userLogin`, {
-      method: 'POST', // or 'PUT'
+      method: "POST", // or 'PUT'
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({username:username,password:password}),
+      body: JSON.stringify({ username: username, password: password }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.data.user) {
-          console.log('bhitra:', data);
+          console.log("bhitra:", data);
           localStorage.setItem("user", JSON.stringify(data.data.user));
-          notify.success("Login")
-          navigate("/")
+          notify.success("Login"); // Show a success notification
+          navigate("/");
           window.location.reload();
         }
       })
       .catch((error) => {
-        notify.error(error)
-        console.error('Error:', error);
+        notify.error(error);
+        console.error("Error:", error); // Show an error notification with the error message
       });
   }
   return (

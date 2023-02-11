@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser'
 import router from "./routes.js";
+import path from "path"
 // import {connectDatabase} from "./database/connection.js"
 import errorHandler from './middleware/errorHandler.js';
 
@@ -13,6 +14,7 @@ console.log(process.env.PORT)
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use("/uploads", express.static("uploads"));
 app.use(router)
 app.use(errorHandler);
 // connectDatabase()

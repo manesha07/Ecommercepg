@@ -8,7 +8,9 @@ import {addToCart} from "../redux/cartSlice.js"
 import * as productServices from "../services/index.js";
 import { Link, useNavigate } from 'react-router-dom';
 
+
 //Detail of product is displayed with the help of id from the useParams hook
+
 const DetailProduct = () => {
     const {id} = useParams();
     console.log("this is iddetail product",id)

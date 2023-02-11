@@ -16,8 +16,11 @@ const Cart = () => {
   const products = JSON.parse(localStorage.getItem("cart"))
   const user = JSON.parse(localStorage.getItem("user"))
 
-  console.log("cart items,",products)
+  const products = JSON.parse(localStorage.getItem("cart")); // Get cart items from local storage
 
+  console.log("cart items,", products);
+
+  // Use selector hook to get the count of items in the cart from the Redux store
   const cartCount = useSelector((state) => {
     console.log("this is nav state", state.cart.count);
     return state.cart.count;
@@ -91,9 +94,11 @@ const Cart = () => {
                       Sub Total:
                     </td>
                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      {cartTotal= products.reduce((total,item) => {
-                        return total + (item.cartQuantity * item.price)
-                      },0)}
+                      {
+                        (cartTotal = products.reduce((total, item) => {
+                          return total + item.cartQuantity * item.price;
+                        }, 0))
+                      }
                     </td>
                   </tr>
                   <tr class="bg-white border-b">
@@ -101,16 +106,16 @@ const Cart = () => {
                       Shipping 10%:
                     </td>
                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      {shippingTotal = 0.1 *cartTotal}
+                      {(shippingTotal = 0.1 * cartTotal)}
                     </td>
                   </tr>
                   <tr class="bg-white border-b">
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      Total: 
+                      Total:
                     </td>
 
                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    {total= cartTotal +shippingTotal}
+                      {(total = cartTotal + shippingTotal)}
                     </td>
                   </tr>
                 </tbody>
@@ -124,7 +129,6 @@ const Cart = () => {
          <button class=" bg-gray-800 text-white " onClick={handleCheckout}>
           Click here to Proceed to Checkout
         </button>}
-
       </div>
 
       <hr />

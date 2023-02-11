@@ -81,7 +81,8 @@ const Products = () => {
                 <tr key={item.i} class="hover:bg-gray-700">
                   <td class="border px-9 py-5">
                     <img
-                      src={item.images}
+          
+                      src={process.env.REACT_APP_API_URL+'/uploads/'+item.images}
                       alt={item.id + "img"}
                       class="h-12 w-12 object-cover rounded-full"
                     />

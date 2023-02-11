@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -49,8 +48,11 @@ const Products = () => {
                   key={item.id}
                   className="card h-[373] w-[234px] inline-block text-center shadow-xl m-[20px] hover:mt-[-0.5px]"
                 >
+                  {" "}
                   <img
-                    src={item.images}
+                    src={
+                      process.env.REACT_APP_API_URL + "/uploads/" + item.images
+                    }
                     alt={item.id + "img"}
                     className="p-[10px] h-[233px] w-[233px]"
                   />
