@@ -6,22 +6,30 @@ import * as notify from "../utils/notify.js"
 import "./admin.css";
 import authHeader from '../authentication/authHeader.js';
 
-const Users = () => {
-  const [users, setUsers] = useState("");
+const Orders = () => {
+    const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(5);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/users`)
+    fetch(`${process.env.REACT_APP_API_URL}/orders`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("mathi", data);
-        setUsers(data.data);
-      });
-  }, []);
+        const arr=[]
+        const res = data.data.data.map((item) => {
+          const obj = JSON.parse(item.orderItems)
+          obj.map((item) => arr.push(item))
+        }
+
+      );
+      setProducts(arr);
+    })
+    .catch((err) => {
+      console.error(err)});
+}, []);
 
   const Delete = (id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/orders/${id}`, {
       method: "DELETE",
       headers: authHeader(),
     })
@@ -33,7 +41,7 @@ const Users = () => {
           .then((data) => {
             if (!data.details) {
               console.log("ddd", data.data);
-              setUsers(data.data);
+              setProducts(data.data);
               notify.success("deleted");
             } else {
               notify.error(data.details);
@@ -48,7 +56,7 @@ const Users = () => {
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = products.slice(indexOfFirstUser, indexOfLastUser);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -70,21 +78,21 @@ const Users = () => {
             <th class="px-4 py-2">Delete</th>
           </tr>
         </thead>
-        {users &&
-          currentUsers.map((item, i) => {
+        {products &&
+          products.map((item, i) => {
             return (
               <>
                 <tr key={item.i} class="hover:bg-gray-700">
                   <td>{item.name}</td>
-                  <td>{item.username}</td>
-                  <td>{item.email}</td>
+                  <td>{item.cartQuantity}</td>
+                  <td>{item.price}</td>
                   <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                     <button
                       type="button"
                       class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                     >
                       {" "}
-                      <Link to={`../users/edit/${item.id}`}> Edit </Link>
+                      <Link to={`../orders/${item.id}`}> Edit </Link>
                     </button>
                   </td>
                   <td>
@@ -108,7 +116,7 @@ const Users = () => {
         <div className="p-[10px]">
           <ul className="pagination">
             {Array.from(
-              { length: Math.ceil(users.length / usersPerPage) },
+              { length: Math.ceil(products.length / usersPerPage) },
               (_, i) => (
                 <li
                   key={i}
@@ -136,4 +144,4 @@ const Users = () => {
   );
 }
 
-export default Users
+export default Orders;

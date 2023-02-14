@@ -4,10 +4,10 @@ import multer from "multer";
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./uploads");
+    cb(null, "./src/uploads");
   },
   filename: (req, file, cb) => {
-    // cb(null, `${Date.now()}-${file.originalname}`);
+    // cb(null, ${Date.now()}-${file.originalname});
      cb(null, file.originalname);
   },
 });
@@ -29,6 +29,7 @@ const upload = multer({ storage: storage });
 //Create Product-- only for Admin
 export function createProduct(req, res, next) {
   const product = req.body;
+  console.log("im body",req.body)
 
   productService
     .createProduct({ ...req.body, images: req.file.filename })
@@ -55,7 +56,7 @@ export function getAllProducts(req, res, next) {
 
   productService
     .getAllProducts(pageNumber, itemsPerPage)
-    .then((data) =>     {console.log(res.json(data))})
+    .then((data) => res.json(data))
     .catch((err) => next(err));
 }
 
@@ -65,16 +66,17 @@ export function getProductDetails(req, res, next) {
   const product = req.params.id;
   productService
     .getProductDetails(req.params.id)
-    .then((data) =>     {console.log(res.json(data))})
+    .then((data) => res.json(data))
     .catch((err) => next(err));
 }
 
 //Update product  -- only for Admin
 
 export function updateProduct(req, res, next) {
+    const product = req.body;
   productService
     .updateProduct(req.params.id, req.body)
-    .then((data) =>     {console.log(res.json(data))})
+    .then((data) => res.json(data))
     .catch((err) => next(err));
 }
 
@@ -83,6 +85,6 @@ export function updateProduct(req, res, next) {
 export function deleteProduct(req, res, next) {
   productService
     .deleteProduct(req.params.id)
-    .then((data) =>     {console.log(res.json(data))})
+    .then((data) => res.json(data))
     .catch((err) => next(err));
 }

@@ -34,12 +34,12 @@ const Products = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <>
-      <p className="text-4xl leading-8 font-semibold mb-12 text-slate-700">
+    <div className="">
+      <p className="text-4xl leading-8 font-semibold mb-12 text-slate-700 md:text-left">
         Products
       </p>
       <hr />
-      <div className="flex flex-wrap">
+      <div className="sm:text-center md:flex md:flex-wrap md:text-center md:justify-center">
         {currentProducts.map((item) => {
           return (
             <>
@@ -64,7 +64,7 @@ const Products = () => {
           );
         })}
       </div>
-      <div className="p-[10px]">
+      <div className="p-[10px] text-center">
         <ul className="pagination">
           {Array.from(
             { length: Math.ceil(products.length / productsPerPage) },
@@ -88,7 +88,7 @@ const Products = () => {
           )}
         </ul>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -14,91 +14,115 @@ const MyOrders = () => {
   const user = JSON.parse(localStorage.getItem("user"))
   console.log(`${process.env.REACT_APP_API_URL}/orders/${user.id}`)
 
-  useEffect( () => {
-      console.log("hioii ther re isi")
+  useEffect(() => {
+    console.log("hioii ther re isi")
     axios
       .get(`${process.env.REACT_APP_API_URL}/orders/${user.id}`)
       .then((data) => {
-        const arr=[]
-        const res = data.data.data.map((item => {
+        const arr = []
+        const res = data.data.data.map((item) => {
           const obj = JSON.parse(item.orderItems)
           obj.map((item) => arr.push(item))
-        }))
-        console.log("final array",arr)
+        }
+        )
+        console.log("final array", arr)
 
-        // const filteredarr = arr.map((item) => {
+        // Loop through the values array
+        const uniqueValues = {};
 
-        // })
-        setProducts(arr);
+        // Loop through the values array
+        arr.forEach(obj => {
+          // Generate a unique key for the object based on its id and name
+          const key = obj.id;
+
+          // If the object is not already in the uniqueValues object, add it with a count of 1
+          if (!uniqueValues[key]) {
+            uniqueValues[key] = obj;
+            uniqueValues[key].orderQuantity = obj.cartQuantity;
+            // console.log(uniqueValues)
+          }
+          // If the object is already in the uniqueValues object, increment its count
+          else {
+            uniqueValues[key].cartQuantity = uniqueValues[key].cartQuantity + obj.cartQuantity;
+            uniqueValues[key].orderQuantity = uniqueValues[key].orderQuantity + obj.cartQuantity;
+            // console.log(uniqueValues)
+          }
+        });
+
+        // Convert the uniqueValues object back into an array of objects
+        const uniqueValuesArray = Object.values(uniqueValues);
+        console.log("unique", uniqueValuesArray)
+        setProducts(uniqueValuesArray);
       })
       .catch((err) => {
-        console.error(err)});
+        console.error(err)
+      });
   }, []);
 
   return (
-    <>{user  ? <div>
+    <>{user ? <div>
       <p className="text-[40px]">My Orders</p>
       <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
             <div class="overflow-hidden">
-              <table class="min-w-full text-center">
-                <thead class="border-b bg-gray-800">
-                  <tr>
-                    <th
-                      scope="col"
-                      class="text-sm font-medium text-white px-6 py-4"
-                    >
-                      Payment Details
-                    </th>
-                    <th
-                      scope="col"
-                      class="text-sm font-medium text-white px-6 py-4"
-                    >
-                      Payment Calculation
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="bg-white border-b">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      Sub Total:
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      {cartTotal= products.reduce((total,item) => {
-                        return total + (item.cartQuantity * item.price)
-                      },0)}
-                    </td>
-                  </tr>
-                  <tr class="bg-white border-b">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      Shipping 10%:
-                    </td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      {shippingTotal = 0.1 *cartTotal}
-                    </td>
-                  </tr>
-                  <tr class="bg-white border-b">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      Total: 
-                    </td>
+              <div style={{ width: "100%", overflow: "auto" }} className="sm:w-[320px] md:w-[600px] lg:w-[1400px]">
+                <table class="min-w-full text-center">
+                  <thead class="border-b bg-gray-800">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="text-sm font-medium text-white px-6 py-4"
+                      >
+                        Payment Details
+                      </th>
+                      <th
+                        scope="col"
+                        class="text-sm font-medium text-white px-6 py-4"
+                      >
+                        Payment Calculation
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="bg-white border-b">
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        Sub Total:
+                      </td>
+                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                        {cartTotal = products.reduce((total, item) => {
+                          return total + (item.cartQuantity * item.price)
+                        }, 0)}
+                      </td>
+                    </tr>
+                    <tr class="bg-white border-b">
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        Shipping 10%:
+                      </td>
+                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                        {shippingTotal = 0.1 * cartTotal}
+                      </td>
+                    </tr>
+                    <tr class="bg-white border-b">
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        Total:
+                      </td>
 
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    {total= cartTotal +shippingTotal}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                        {total = cartTotal + shippingTotal}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-   
       </div>
-
       <hr />
       {/* {(total === 0) ? <h1> Sorry,there are no Orders */}
-        {/* </h1> :  */}
-      <div className="flex flex-wrap">
+      {/* </h1> :  */}
+      <div className="sm:text-center md:flex md:flex-wrap md:text-center md:justify-center">
         {products &&
           products.slice(0, 10).map((item) => {
             return (
@@ -126,7 +150,7 @@ const MyOrders = () => {
             );
           })}
       </div>
-      </div>: 
+    </div> :
       <div>
         <p>Sorry ,there are no Orders yet.</p>
       </div>}

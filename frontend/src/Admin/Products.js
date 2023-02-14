@@ -62,6 +62,7 @@ const Products = () => {
       <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-4 rounded">
         <Link to="/addproduct">Add Product</Link>
       </button>
+      <div style={{ width: "100%", overflow: "auto" }} className="sm:w-[320px] md:w-[600px] lg:w-[1400px]">
       <table class="table-auto w-full text-center text-white bg-gray-800">
         <thead class="font-medium">
           <tr>
@@ -80,8 +81,7 @@ const Products = () => {
               return (
                 <tr key={item.i} class="hover:bg-gray-700">
                   <td class="border px-9 py-5">
-                    <img
-          
+                    <img       
                       src={process.env.REACT_APP_API_URL+'/uploads/'+item.images}
                       alt={item.id + "img"}
                       class="h-12 w-12 object-cover rounded-full"
@@ -114,7 +114,7 @@ const Products = () => {
               );
             })}
         </tbody>
-        <div className="p-[10px]">
+        <div className="p-[10px] flex flex-wrap">
           <ul className="pagination">
             {Array.from(
               { length: Math.ceil(products.length / productsPerPage) },
@@ -139,6 +139,7 @@ const Products = () => {
           </ul>
         </div>
       </table>
+      </div>
       <ToastContainer autoClose={4000} />
     </>
   );

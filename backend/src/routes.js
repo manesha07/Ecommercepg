@@ -16,8 +16,6 @@ import * as dotenv from "dotenv";
 dotenv.config({path : '.env'});
 import { uploadImage } from "./controllers/productController.js";
 
-console.log("router",process.env.PORT)
-
 const router = Router();
 
 router.get('/',adminController.getAllAdmins)
@@ -55,11 +53,15 @@ router.post(
 );
   router.get("/products/:id",productController.getProductDetails);
 
-  router.put("/products/:id",authenticate,validateBody(editProductSchema),productController.updateProduct);
+  router.put("/products/:id",
+  // authenticate,validateBody(editProductSchema),
+  productController.updateProduct);
 
   router.delete("/products/:id", authenticate,productController.deleteProduct);
 
-  router.get("/orders/:id", orderController.getAllOrders);
+  router.get("/orders", orderController.getAllOrders);
+
+  router.get("/orders/:id", orderController.getAllOrdersByUser);
 
   router.post("/orders/:id", orderController.createOrders);
 

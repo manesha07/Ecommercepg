@@ -3,7 +3,6 @@
 import * as orderService from "../services/orderServices.js"
 
 export function createOrders(req,res,next) {
-    console.log("req ordes",req.body)
     orderService
     .createOrders(req.body)
     .then((data) => res.json(data))
@@ -11,9 +10,16 @@ export function createOrders(req,res,next) {
 }
 
 export function getAllOrders(req, res, next) {
+  orderService
+    .getAllOrders()
+    .then((data) => res.json(data))
+    .catch((err) => next(err));
+}
+
+export function getAllOrdersByUser(req, res, next) {
     console.log("getall ordes",req.params.id)
     orderService
-      .getAllOrders(req.params.id)
+      .getAllOrdersByUser(req.params.id)
       .then((data) => res.json(data))
       .catch((err) => next(err));
   }

@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ToastContainer} from 'react-toastify';
 import * as notify from "../utils/notify.js";
-import authHeader from '../authentication/authHeader.js';
 import axios from "axios";
-
-
 
 export default function EditProduct() {
   const [title,setTitle] = useState("");
@@ -25,7 +22,7 @@ export default function EditProduct() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    //  const adminToken = JSON.parse(localStorage.getItem("token"));
+     const adminToken = JSON.parse(localStorage.getItem("token"));
     const formData = new FormData();
     console.log("form", formData);
     formData.append("name", title);
@@ -35,15 +32,14 @@ export default function EditProduct() {
     formData.append("category", category);
     formData.append("image", image);
     console.log(image);
+    console.log("this is formdata",formData)
 
    axios
-     .post(`${process.env.REACT_APP_API_URL}/products`, formData, {
-       method: "POST", // or 'PUT'
-
-       headers: {
+     .put(`${process.env.REACT_APP_API_URL}/products/${id}`, formData,{headers: {
          "Content-Type": "multipart/form-data",
-       },
-     })
+        //  'Authorization': `Bearer ${adminToken}`
+       }}
+     )
      .then((response) => response.data)
      .then((data) => {
        console.log(data.details);

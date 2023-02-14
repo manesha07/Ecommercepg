@@ -17,6 +17,7 @@ import UserLogin from "./Component/userLogin";
 import UserRegister from "./Component/userRegister";
 import Products from "./Component/Products";
 import { Footer } from "./Component/Footer";
+import Nav from "./Component/Nav";
 
 import CheckoutForm from "./Component/Checkout";
 
@@ -25,8 +26,8 @@ import MyOrders from "./Component/MyOrders";
 
 function App() {
   return (
-    <div className="container max-w-[1400px] mx-auto">
-      <Navbar />
+    <div className="container max-w-[600px] md:max-w-[1200px] lg:max-w-[1400px] mx-auto">
+      <Nav/>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/login" element={<Login />} />

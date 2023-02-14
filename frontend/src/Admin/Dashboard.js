@@ -4,40 +4,15 @@ import { Navbar } from '../Component/Navbar'
 import { useState } from 'react'
 import Products from './Products'
 import Users from './Users'
+import Orders from './Orders'
 
 const Dashboard = () => {
   const [show,setShow] =useState(true);
+  const [selectedComponent, setSelectedComponent] = useState(null);
 
-// return (
-//   <>
-//     <div className="flex h-screen">
-//       <div className="bg-gray-800 w-64 p-6">
-//         <ul className="text-white">
-//           <li className="mb-4">
-//             <button
-//               className="focus:outline-none font-medium text-white hover:bg-gray-900 p-2 rounded-lg block"
-//               onClick={() => setShow(true)}
-//             >
-//               Products
-//             </button>
-//           </li>
-//           <li className="mb-4">
-//             <button
-//               className="focus:outline-none font-medium text-white hover:bg-gray-900 p-2 rounded-lg block"
-//               onClick={() => setShow(false)}
-//             >
-//               Users
-//             </button>
-//           </li>
-//         </ul>
-//       </div>
-//       <div className="ml-40">{show ? <Products /> : <Users />}</div>
-//     </div>
-//   </>
-// );
-
-
-
+  const handleComponentClick = (component) => {
+    setSelectedComponent(component);
+  };
 return (
   <>
     <div className="flex flex-row">
@@ -45,7 +20,7 @@ return (
         <ul className="text-white font-medium p-6">
           <li className="mb-3">
             <button
-              onClick={() => setShow(true)}
+              onClick={()=>handleComponentClick(<Products/>)}
               className="w-full py-2 text-left text-white hover:bg-gray-700 focus:outline-none"
             >
               Products
@@ -53,16 +28,25 @@ return (
           </li>
           <li className="mb-3">
             <button
-              onClick={() => setShow(false)}
+              onClick={()=>handleComponentClick(<Users/>)}
               className="w-full py-2 text-left text-white hover:bg-gray-700 focus:outline-none"
             >
               Users
             </button>
           </li>
+          {/* <li className="mb-3">
+            <button
+              onClick={()=>handleComponentClick(<Orders/>)}
+              className="w-full py-2 text-left text-white hover:bg-gray-700 focus:outline-none"
+            >
+              Orders
+            </button>
+          </li> */}
         </ul>
       </div>
       <div className="ml-10 w-4/5 h-screen">
-        {show ? <Products /> : <Users />}
+        {selectedComponent ? selectedComponent : <Products/>}
+        {/* {show ? <Products/> :<Products/>} */}
       </div>
     </div>
   </>

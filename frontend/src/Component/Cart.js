@@ -13,7 +13,6 @@ let total = 0;
 
 const Cart = () => {
   const navigate = useNavigate();
-  const products = JSON.parse(localStorage.getItem("cart"))
   const user = JSON.parse(localStorage.getItem("user"))
 
   const products = JSON.parse(localStorage.getItem("cart")); // Get cart items from local storage
@@ -133,7 +132,7 @@ const Cart = () => {
 
       <hr />
 
-      <div className="flex flex-wrap">
+      <div className="sm:text-center md:flex md:flex-wrap md:text-center md:justify-center">
         {products &&
           products.slice(0, 10).map((item) => {
             return (

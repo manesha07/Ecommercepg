@@ -3,17 +3,18 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser'
 import router from "./src/routes.js";
+import path from "path"
 // import {connectDatabase} from "./database/connection.js"
 import errorHandler from './src/middleware/errorHandler.js';
 
 const app = express()
 
-dotenv.config();
-// dotenv.config({path : 'Library/Library_management_System/backend/.env'});
+dotenv.config({path : '.env'});
 console.log(process.env.PORT)
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use("/uploads", express.static("src/uploads"));
 app.use(router)
 app.use(errorHandler);
 // connectDatabase()
