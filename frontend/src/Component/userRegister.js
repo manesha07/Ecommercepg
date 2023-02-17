@@ -36,8 +36,12 @@ const Register = () => {
       .then((data) => {
         if (!data.details) {
           console.log("Success:", data);
-          notify.success("registered"); // Show a success notification
-          navigate("/");
+          if (notify) {
+            notify.success("registered");
+          }
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
         } else {
           notify.error(data.details);
         }

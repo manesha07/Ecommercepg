@@ -27,9 +27,12 @@ const Login = () => {
         if (data.data.user) {
           console.log("bhitra:", data);
           localStorage.setItem("user", JSON.stringify(data.data.user));
-          notify.success("Login"); // Show a success notification
-          navigate("/");
-          window.location.reload();
+          if (notify) {
+            notify.success("Login");
+          }
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
         }
       })
       .catch((error) => {
