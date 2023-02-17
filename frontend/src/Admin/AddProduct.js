@@ -67,7 +67,8 @@ export default function AddProduct() {
       });
   }
   return (
-    <><Nav />
+    <>
+      <Nav />
       <form
         onSubmit={handleSubmit}
         className="shadow-xl mx-auto w-[300px] p-[30px] mt-[40px] rounded-md"
@@ -78,6 +79,7 @@ export default function AddProduct() {
           Product Name
         </label>
         <input
+          data-testid="productName"
           type="text"
           name="title"
           placeholder={"Product Name"}
@@ -91,6 +93,7 @@ export default function AddProduct() {
           Product Description
         </label>
         <input
+          data-testid="productDiscription"
           type="text"
           name="description"
           placeholder={"Description"}
@@ -99,27 +102,17 @@ export default function AddProduct() {
             setDescription(e.target.value);
           }}
         />
-        {/* <div>
-          <label for="image" className="text-gray-600">
-            {" "}
-            Product Image
-          </label>
-          <input
-            type="text"
-            name="image"
-            placeholder={"image"}
-            value={image || ""}
-            onChange={(e) => {
-              setImage(e.target.value);
-            }}
-          />
-        </div> */}
 
         <div>
           <label for="image" className="text-gray-600">
             Product Image
           </label>
-          <input type="file" name="image" onChange={handleImageChange} />
+          <input
+            data-testid="productImage"
+            type="file"
+            name="image"
+            onChange={handleImageChange}
+          />
         </div>
 
         <div>
@@ -128,6 +121,7 @@ export default function AddProduct() {
             Product Price
           </label>
           <input
+            data-testid="productPrice"
             type="number"
             name="price"
             placeholder={"Price"}
@@ -143,6 +137,7 @@ export default function AddProduct() {
             Product Category
           </label>
           <input
+            data-testid="productCategory"
             type="text"
             name="category"
             placeholder={"Category"}
@@ -158,6 +153,7 @@ export default function AddProduct() {
             Product Stock
           </label>
           <input
+            data-testid="productStock"
             type="number"
             name="stock"
             placeholder={"Stock"}
@@ -168,6 +164,7 @@ export default function AddProduct() {
           />
         </div>
         <button
+          data-testid="productSubmit"
           type="submit"
           className="shadow-md p-[5px] w-full mb-[20px] mt-[10px] text-white rounded-md bg-green-600"
         >

@@ -1,6 +1,6 @@
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import axios from "axios";
-import AddProduct from "./AddProduct";
+import EditProduct from "./EditProduct";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import {
@@ -14,7 +14,7 @@ jest.mock("../utils/notify");
 jest.mock("axios");
 
 describe("AddProduct", () => {
-  test("submits the form and shows success message", async () => {
+  test("Edit and submits the form and shows success message", async () => {
     axios.post.mockResolvedValueOnce({
       data: { details: null },
     });
@@ -22,7 +22,7 @@ describe("AddProduct", () => {
       //This line renders the AddProduct component within a Provider and BrowserRouter.
       <Provider store={store}>
         <BrowserRouter>
-          <AddProduct />
+          <EditProduct />
         </BrowserRouter>
       </Provider>
     );
@@ -53,25 +53,17 @@ describe("AddProduct", () => {
     fireEvent.change(productCategoryInput, {
       target: { value: productCategory },
     });
-
     fireEvent.change(productStockInput, { target: { value: productStock } });
 
     fireEvent.click(productSubmitButton);
-    //  await waitFor(() => {
-    //    expect(screen.getByText("Succesfully Added")).toBeInTheDocument();
-    //  });
+    // await waitFor(() => {
+    //   expect(screen.getByText("Succesfully Added")).toBeInTheDocument();
+    // });
 
-    // await waitForElementToBeInTheDocument(
-    //   screen.getByText("Succesfully Added")
-    // );
-    // expect(screen.getByText("Succesfully Added")).toBeInTheDocument();
-
-    console.log(notify.success, "im success ");
-    //These lines use the fireEvent object from the React Testing Library to simulate user input on the form elements.
     await waitFor(() => {
-      console.log(notify.success, "im success 2");
-      expect(notify.success).toHaveBeenCalledWith("Added");
-    });
+      console.log(notify.success, "noteIM ");
+      expect(notify.success).toHaveBeenCalledWith("Edited");
+    }); 
 
     expect(productNameInput.value).toBe("Test Product");
     expect(productCategoryInput.value).toBe("Test");
@@ -97,15 +89,6 @@ describe("AddProduct", () => {
           },
         }
       );
-      //want Successfully Added message in this line
     });
-
-    //  const mockSuccess = jest.spyOn(notify, "success");
-    //     mockSuccess.mockImplementation(() => {});
-    //        await waitFor(() =>
-    //          expect(mockSuccess).toHaveBeenCalledWith("Added", {
-    //            position: expect.anything(),
-    //          })
-    //        );
   });
 });
