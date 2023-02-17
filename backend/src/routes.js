@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 // import * as bookController from "./controllers/books.js"
 import * as adminController from "./controllers/adminController.js";
 import * as userController from "./controllers/userController.js";
@@ -13,30 +13,30 @@ import editAdminSchema from "./schemas/editAdmin.js";
 import { validateBody } from './middleware/validation.js';
 import authenticate from './middleware/authenticate.js';
 import * as dotenv from "dotenv";
-dotenv.config({path : '.env'});
+dotenv.config({ path: '.env' });
 import { uploadImage } from "./controllers/productController.js";
 
 const router = Router();
 
-router.get('/',adminController.getAllAdmins)
+router.get('/', adminController.getAllAdmins)
 
-router.post('/login',adminController.login)
+router.post('/login', adminController.login)
 
-router.post('/register',validateBody(addAdminSchema),adminController.registerAdmin)
+router.post('/register', validateBody(addAdminSchema), adminController.registerAdmin)
 
-router.put('/:adminIdentifier',validateBody(editAdminSchema),adminController.updateAdmin)
+router.put('/:adminIdentifier', validateBody(editAdminSchema), adminController.updateAdmin)
 
-router.delete('/:adminIdentifier',adminController.deleteAdmin)
+router.delete('/:adminIdentifier', adminController.deleteAdmin)
 
-router.post('/userLogin',userController.login)
+router.post('/userLogin', userController.login)
 
-router.post('/userRegister',validateBody(addUserSchema),userController.registerUser)
+router.post('/userRegister', validateBody(addUserSchema), userController.registerUser)
 
 router.get("/users", userController.getAllUsers);
 
-router.put('/users/:userIdentifier',authenticate,validateBody(editUserSchema),userController.updateUser)
+router.put('/users/:userIdentifier', authenticate, validateBody(editUserSchema), userController.updateUser)
 
-router.delete('/users/:userIdentifier',authenticate,userController.deleteUser)
+router.delete('/users/:userIdentifier', authenticate, userController.deleteUser)
 
 router.get("/users/:id", userController.getUserDetails);
 
@@ -51,21 +51,22 @@ router.post(
   uploadImage,
   productController.createProduct
 );
-  router.get("/products/:id",productController.getProductDetails);
+router.get("/products/:id", productController.getProductDetails);
 
-  router.put("/products/:id",
+router.put("/products/:id",
   // authenticate,validateBody(editProductSchema),
+  uploadImage,
   productController.updateProduct);
 
-  router.delete("/products/:id", authenticate,productController.deleteProduct);
+router.delete("/products/:id", authenticate, productController.deleteProduct);
 
-  router.get("/orders", orderController.getAllOrders);
+router.get("/orders", orderController.getAllOrders);
 
-  router.get("/orders/:id", orderController.getAllOrdersByUser);
+router.get("/orders/:id", orderController.getAllOrdersByUser);
 
-  router.post("/orders/:id", orderController.createOrders);
+router.post("/orders/:id", orderController.createOrders);
 
-  router.delete("/orders/:id", orderController.deleteOrder);
+router.delete("/orders/:id", orderController.deleteOrder);
 
 
 export default router;

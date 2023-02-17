@@ -8,7 +8,7 @@ var storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     // cb(null, ${Date.now()}-${file.originalname});
-     cb(null, file.originalname);
+    cb(null, file.originalname);
   },
 });
 
@@ -29,7 +29,7 @@ const upload = multer({ storage: storage });
 //Create Product-- only for Admin
 export function createProduct(req, res, next) {
   const product = req.body;
-  console.log("im body",req.body)
+  console.log("im body", req.body)
 
   productService
     .createProduct({ ...req.body, images: req.file.filename })
@@ -73,9 +73,10 @@ export function getProductDetails(req, res, next) {
 //Update product  -- only for Admin
 
 export function updateProduct(req, res, next) {
-    const product = req.body;
+  const product = req.body;
+  console.log("update", req.body)
   productService
-    .updateProduct(req.params.id, req.body)
+    .updateProduct(req.params.id, { ...req.body, images: req.file.filename })
     .then((data) => res.json(data))
     .catch((err) => next(err));
 }
