@@ -3,13 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import * as notify from "../utils/notify.js"
 import * as Sentry from "@sentry/react";
+import Nav from "./Nav";
+
 const user = JSON.parse(localStorage.getItem("token"));
 
 // This component is login for admin
 const Login = () => {
-  const [username,setUsername] =useState("");
-  const [password,setPassword] =useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     fetch(`${process.env.REACT_APP_API_URL}/login`, {
@@ -17,21 +20,24 @@ const Login = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({username:username,password:password}),
+      body: JSON.stringify({ username: username, password: password }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("received",data)
-// if token is received then the login is successful otherwise error is thrown
+        console.log("received", data)
+        // if token is received then the login is successful otherwise error is thrown
         if (data.data.token) {
           localStorage.setItem("user", JSON.stringify(data.data.user));
           localStorage.setItem("token", JSON.stringify(data.data.token));
-          notify.success("Login")
-          navigate("/");
-          window.location.reload();
+          if (notify) {
+            notify.success("Login");
+          }
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
         }
-        else{
-          console.log("login admin",data)
+        else {
+          console.log("login admin", data)
           notify.error(data.details)
         }
       })
@@ -43,6 +49,7 @@ const Login = () => {
   }
   return (
     <>
+      <Nav />
       <form
         onSubmit={handleSubmit}
         className="login shadow-xl mx-auto w-[300px]  p-[30px] mt-[40px] rounded-md"

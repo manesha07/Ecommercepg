@@ -1,28 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import * as notify from "../utils/notify.js";
 import axios from "axios";
+import Nav from "../Component/Nav";
 
 export default function EditProduct() {
-  const [title,setTitle] = useState("");
-  const [description,setDescription] = useState("");
-    const [image, setImage] = useState(null);
-  const [price,setPrice] =useState("");
-  const [category,setCategory] =useState("");
-  const [stock,setStock] = useState("");
-  const {id} =useParams();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState(null);
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [stock, setStock] = useState("");
+  const { id } = useParams();
 
 
-   const handleImageChange = (event) => {
-     setImage(event.target.files[0]);
-     console.log(image, "im imahe");
-   };
+  const handleImageChange = (event) => {
+    setImage(event.target.files[0]);
+    console.log(image, "im imahe");
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-     const adminToken = JSON.parse(localStorage.getItem("token"));
+    const adminToken = JSON.parse(localStorage.getItem("token"));
     const formData = new FormData();
     console.log("form", formData);
     formData.append("name", title);
@@ -32,32 +33,34 @@ export default function EditProduct() {
     formData.append("category", category);
     formData.append("image", image);
     console.log(image);
-    console.log("this is formdata",formData)
+    console.log("this is formdata", formData)
 
-   axios
-     .put(`${process.env.REACT_APP_API_URL}/products/${id}`, formData,{headers: {
-         "Content-Type": "multipart/form-data",
-        //  'Authorization': `Bearer ${adminToken}`
-       }}
-     )
-     .then((response) => response.data)
-     .then((data) => {
-       console.log(data.details);
-       if (!data.details) {
-         console.log("Success:", data);
-         notify.success("Edited");
-       } else {
-         notify.error(data.details);
-       }
-     })
-     .catch((error) => {
-       notify.error(error);
-       console.error("Error:", error);
-     });
+    axios
+      .put(`${process.env.REACT_APP_API_URL}/products/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          //  'Authorization': `Bearer ${adminToken}`
+        }
+      }
+      )
+      .then((response) => response.data)
+      .then((data) => {
+        console.log(data.details);
+        if (!data.details) {
+          console.log("Success:", data);
+          notify.success("Edited");
+        } else {
+          notify.error(data.details);
+        }
+      })
+      .catch((error) => {
+        notify.error(error);
+        console.error("Error:", error);
+      });
   }
 
   return (
-    <>
+    <><Nav />
       <form
         onSubmit={handleSubmit}
         className="shadow-xl mx-auto w-[300px]  p-[30px] mt-[40px] rounded-md"

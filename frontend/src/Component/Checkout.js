@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import * as notify from "../utils/notify.js";
 import authHeader from "../authentication/authHeader.js";
+import Nav from "./Nav";
 
 //checkoutform is diaplayed when the user orders the items/products
 const CheckoutForm = () => {
@@ -46,7 +47,7 @@ const CheckoutForm = () => {
   };
 
   return (
-    <>
+    <><Nav />
       <form
         onSubmit={handleSubmit}
         className="login shadow-xl mx-auto w-[300px]  p-[30px] mt-[40px] rounded-md"

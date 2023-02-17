@@ -11,13 +11,11 @@ import Dashboard from "./Admin/Dashboard";
 import AddProduct from "./Admin/AddProduct";
 import EditProduct from "./Admin/EditProduct";
 import EditUser from "./Admin/EditUsers";
-import { Navbar } from "./Component/Navbar";
 import Cart from "./Component/Cart";
 import UserLogin from "./Component/userLogin";
 import UserRegister from "./Component/userRegister";
 import Products from "./Component/Products";
 import { Footer } from "./Component/Footer";
-import Nav from "./Component/Nav";
 
 import CheckoutForm from "./Component/Checkout";
 
@@ -27,16 +25,15 @@ import MyOrders from "./Component/MyOrders";
 function App() {
   return (
     <div className="container max-w-[600px] md:max-w-[1200px] lg:max-w-[1400px] mx-auto">
-      <Nav/>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/userLogin" element={<UserLogin />} />
         <Route exact path="/userRegister" element={<UserRegister />} />
-        <Route exact path="/products" element={<Products />} />
+        <Route exact path="/products" element={<Products myProp={true} />} />
         <Route exact path="/products/:id" element={<DetailProduct />} />
-        <Route exact path="/usersdetail/:id" element={<DetailUser/>} />
+        <Route exact path="/usersdetail/:id" element={<DetailUser />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/addproduct" element={<AddProduct />} />
         <Route exact path="/products/edit/:id" element={<EditProduct />} />
