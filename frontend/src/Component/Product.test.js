@@ -12,13 +12,15 @@ import Products from "./Products";
 test("loads and displays Homepage", async () => {
   render(
     <Provider store={store}>
+      <BrowserRouter>
         <Products />
-      {/* <BrowserRouter>
+        {/* <BrowserRouter>
         <Routes>
           <Route exact path="/products" element={<Products />} />
           
         </Routes>
       </BrowserRouter> */}
+      </BrowserRouter>
     </Provider>
   );
 

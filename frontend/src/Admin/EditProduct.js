@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import * as notify from "../utils/notify.js";
 import axios from "axios";
-import Nav from "../Component/Nav";
+import Nav from "../Component/Nav.js";
 
 export default function EditProduct() {
   const [title, setTitle] = useState("");
@@ -23,7 +23,7 @@ export default function EditProduct() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const adminToken = JSON.parse(localStorage.getItem("token"));
+    // const adminToken = JSON.parse(localStorage.getItem("token"));
     const formData = new FormData();
     console.log("form", formData);
     formData.append("name", title);
@@ -60,7 +60,8 @@ export default function EditProduct() {
   }
 
   return (
-    <><Nav />
+    <>
+      <Nav />
       <form
         onSubmit={handleSubmit}
         className="shadow-xl mx-auto w-[300px]  p-[30px] mt-[40px] rounded-md"
@@ -72,6 +73,7 @@ export default function EditProduct() {
           Product Name
         </label>
         <input
+          data-testid="productName"
           type="text"
           name="title"
           placeholder={"Product Name"}
@@ -85,6 +87,7 @@ export default function EditProduct() {
           Product Description
         </label>
         <input
+          data-testid="productDiscription"
           type="text"
           name="description"
           placeholder={"Description"}
@@ -97,7 +100,12 @@ export default function EditProduct() {
           <label for="image" className="text-gray-600">
             Product Image
           </label>
-          <input type="file" name="image" onChange={handleImageChange} />
+          <input
+            data-testid="productImage"
+            type="file"
+            name="image"
+            onChange={handleImageChange}
+          />
         </div>
         <div>
           <label for="price" className="text-gray-600">
@@ -105,6 +113,7 @@ export default function EditProduct() {
             Product Price
           </label>
           <input
+            data-testid="productPrice"
             type="number"
             name="price"
             placeholder={"Price"}
@@ -120,6 +129,7 @@ export default function EditProduct() {
             Product Category
           </label>
           <input
+            data-testid="productCategory"
             type="text"
             name="category"
             placeholder={"Category"}
@@ -135,6 +145,7 @@ export default function EditProduct() {
             Product Stock
           </label>
           <input
+            data-testid="productStock"
             type="number"
             name="stock"
             placeholder={"Stock"}
@@ -145,6 +156,7 @@ export default function EditProduct() {
           />
         </div>
         <button
+          data-testid="productSubmit"
           type="submit"
           className="shadow-md p-[5px] w-full mb-[20px] mt-[10px] text-white rounded-md bg-green-600"
         >
