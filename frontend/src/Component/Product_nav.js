@@ -27,11 +27,10 @@ const ProductsNav = () => {
 
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-    const currentProducts = products.slice(
-        indexOfFirstProduct,
-        indexOfLastProduct
-    );
-
+    let currentProducts;
+    if (products) {
+        currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+    }
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
@@ -42,7 +41,7 @@ const ProductsNav = () => {
                 </p>
                 <hr />
                 <div className="sm:text-center md:flex md:flex-wrap md:text-center md:justify-center">
-                    {currentProducts.map((item) => {
+                    {currentProducts && currentProducts.map((item) => {
                         return (
                             <>
                                 <Link to={`/products/${item.id}`}>

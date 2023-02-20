@@ -1,7 +1,10 @@
 import React from "react";
+import { useRef } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Nav from "./Nav";
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 import { useState, useEffect } from "react";
 
@@ -14,6 +17,7 @@ const MyOrders = () => {
   const [products, setProducts] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"))
   console.log(`${process.env.REACT_APP_API_URL}/orders/${user.id}`)
+  const containerRef = useRef(null);
 
   useEffect(() => {
     console.log("hioii ther re isi")
@@ -64,39 +68,60 @@ const MyOrders = () => {
     <><Nav />
       {user ?
         <div>
-          <p className="text-[40px]">My Orders</p>
-          <div className="sm:text-center md:flex md:flex-wrap md:text-center md:justify-center">
-            {products &&
-              products.slice(0, 10).map((item) => {
-                return (
-                  <>
-                    <Link to={`../products/${item.id}`}>
-                      <div
-                        key={item.id}
-                        className="card h-[373] w-[234px] inline-block text-center shadow-xl m-[20px] hover:mt-[-0.5px]"
-                      >
-                        <img
-                          src={process.env.REACT_APP_API_URL + "/uploads/" + item.images}
-                          alt={item.id + "img"}
-                          className="p-[10px] h-[233px] w-[233px]"
-                        />
-                        <span className="p-[10px] text-orange-500">
-                          {item.name}
-                        </span>
-                        <span className="p-[10px] text-orange-500 text-end">
-                          ({item.cartQuantity})
-                        </span>
-                        <p className="pb-[10px]">Rs.{item.price}</p>
-                      </div>
-                    </Link>
-                  </>
-                );
-              })}
+
+          <div className="mx-auto w-[600px]  my-[20px] border-slate-400 shadow-xl">
+            <p className="text-[30px]">My Orders</p>
+            <hr className="color-black pb-[10px]" />
+            <div className="max-h-[400px] hover:scrollbar-thin hover:scrollbar-thumb-gray-400 hover:scrollbar-track-gray-300 overflow-y:hidden hover:overflow-y-scroll" >
+              {products &&
+                products.slice(0, 10).map((item) => {
+                  return (
+                    <>
+                      <Link to={`../products/${item.id}`}>
+                        <div
+                          key={item.id}
+                          className="w-[600px] py-[10px]  inline-block text-center m-auto hover:mt-[-0.5px] flex items-center"
+                        >
+                          <img
+                            src={process.env.REACT_APP_API_URL + "/uploads/" + item.images}
+                            alt={item.id + "img"}
+                            className=" h-[80px] w-[80px] pl-[10px]"
+                          />
+                          <div className="text-left pl-[18px]">
+                            <p className="text-gray-900 text-[20px]">
+                              {item.name}
+                            </p>
+                            <p className=" text-gray-600 text-[15px]">
+                              Rs.{item.price}  X {item.cartQuantity}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                      <hr className=" border-gray-200" />
+                    </>
+                  );
+                })}
+            </div>
+            <hr className=" border-gray-200" />
+            <div className="flex justify-between px-[20px] text-[18px] text-gray-600 pt-[15px]">
+              <p > SubTotal</p>
+              <p > {cartTotal = products.reduce((total, item) => {
+                return total + (item.cartQuantity * item.price)
+              }, 0)}</p>
+            </div>
+            <div className="flex justify-between px-[20px] text-[18px] text-gray-600 pb-[15px] pt-[]">
+              <p > Shipping 10%</p>
+              <p >+{shippingTotal = 0.1 * cartTotal}</p>
+            </div>
+            <hr className="border-gray-900 py-[8px]" />
+            <div className="flex justify-between px-[20px] pb-[20px] text-[25px] text-gray-700">
+              <p > Total</p>
+              <p >{total = cartTotal + shippingTotal}</p>
+            </div>
           </div>
-          <hr />
           {/* {(total === 0) ? <h1> Sorry,there are no Orders */}
           {/* </h1> :  */}
-          <div class="flex flex-col w-[2/3]">
+          {/* <div class="flex flex-col w-[2/3]">
             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="overflow-hidden">
@@ -152,7 +177,7 @@ const MyOrders = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div> :
         <div>
           <p>Sorry ,there are no Orders yet.</p>
