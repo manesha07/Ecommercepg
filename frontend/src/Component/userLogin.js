@@ -5,6 +5,8 @@ import * as notify from "../utils/notify.js"
 import Nav from "./Nav";
 import authHeader from '../authentication/authHeader.js';
 
+// PS D:\A_new\final_updated_14\typescriptEcommerce\backend> cd
+
 // component to display login for User
 const Login = () => {
   const [username, setUsername] = useState("");
