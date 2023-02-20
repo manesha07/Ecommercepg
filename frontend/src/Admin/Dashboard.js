@@ -33,17 +33,18 @@ const Dashboard = () => {
                 Users
               </button>
             </li>
-            {/* <li className="mb-3">
-            <button
-              onClick={()=>handleComponentClick(<Orders/>)}
-              className="w-full py-2 text-left text-white hover:bg-gray-700 focus:outline-none"
-            >
-              Orders
-            </button>
-          </li> */}
+            <li className="mb-3">
+              <button
+                onClick={() => handleComponentClick(<Orders />)}
+                className="w-full p-2 text-left hover:bg-[orange] focus:outline-none"
+              >
+                Orders
+              </button>
+            </li>
           </ul>
         </div >
         <div className="sm:w-full md:ml-10 md:w-4/5 md:h-screen">
+          {console.log("selected", selectedComponent)}
           {selectedComponent ? selectedComponent : <Products />}
           {/* {show ? <Products/> :<Products/>} */}
         </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import * as notify from "../utils/notify.js"
@@ -14,6 +14,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,7 +29,12 @@ const Register = () => {
         console.log(data.details)
         if (!data.details) {
           console.log('Success:', data);
-          notify.success("Edited")
+          if (notify) {
+            notify.success("Edited");
+          }
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 3000);
         }
         else {
           notify.error(data.details)

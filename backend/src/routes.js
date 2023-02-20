@@ -62,11 +62,11 @@ router.delete("/products/:id", authenticate, productController.deleteProduct);
 
 router.get("/orders", orderController.getAllOrders);
 
-router.get("/orders/:id", orderController.getAllOrdersByUser);
+router.get("/orders/:userId", orderController.getAllOrdersByUser);
 
-router.post("/orders/:id", orderController.createOrders);
+router.post("/orders/:userId", orderController.createOrders);
 
-router.delete("/orders/:id", orderController.deleteOrder);
+router.delete("/orders/:userId", orderController.deleteOrder);
 
 
 export default router;

@@ -1,7 +1,7 @@
 import camelize from 'camelize';
 import snakeize from 'snakeize';
 
-import {connection} from '../knexfile.js';
+import { connection } from '../knexfile.js';
 
 // console.log("knex connection",Knex(connection))
 
@@ -44,9 +44,9 @@ class DBModel {
   //   images: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg'
   // }
   async save(data) {
-    console.log("result ",data)
+    console.log("result ", data)
     const result = await connection(this.table).insert(snakeize(data)).returning('*');
-   console.log("arko res ",result)
+    console.log("arko res ", result)
     return camelize(result);
   }
   // arko res  [
@@ -63,9 +63,9 @@ class DBModel {
   //   }
   // ]
   async save1(data) {
-    console.log("yoho ",data)
-    const result = await connection(this.table).insert( data).returning('*');
-   console.log("yaha ",result)
+    console.log("yoho ", data)
+    const result = await connection(this.table).insert(data).returning('*');
+    console.log("yaha ", result)
     return result;
   }
 
@@ -77,15 +77,15 @@ class DBModel {
   }
 
   async removeById(id) {
-    console.log("llllllif",id);
+    console.log("llllllif", id);
     const result = await connection(this.table).delete().where({ id });
-      console.log("llllll",result);
+    console.log("llllll", result);
     return camelize(result);
   }
 
   async removeByParams(params) {
     const result = await connection(this.table).delete().where(snakeize(params));
-    console.log("result1",result);
+    console.log("result1", result);
     return camelize(result);
   }
 
@@ -96,16 +96,16 @@ class DBModel {
   }
 
   async getByUserId(id) {
-    console.log("popp",id)
+    console.log("popp", id)
     const data = await connection(this.table).select('*').where('user_id', id);
-  console.log("yaha",data)
+    console.log("yaha", data)
     return data ? camelize(data) : null;
   }
 
   async removeByUserId(id) {
-    console.log("llllllif",id);
-    const result = await connection(this.table).delete().where({user_id:id});
-      console.log("llllll",result);
+    console.log("llllllif", id);
+    const result = await connection(this.table).delete().where({ user_id: id });
+    console.log("llllll", result);
     return camelize(result);
   }
 

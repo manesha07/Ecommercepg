@@ -29,7 +29,6 @@ const ProductsNav = () => {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
-
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -171,6 +170,7 @@ const ProductsNav = () => {
       </div>
     </>
   );
+
 };
 
 export default ProductsNav;

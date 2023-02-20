@@ -38,7 +38,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        notify.error(error);
+        notify.error("Please enter correct username or password");
         console.error("Error:", error); // Show an error notification with the error message
       });
   }

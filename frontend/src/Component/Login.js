@@ -42,7 +42,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        notify.error(error)
+        notify.error("Please enter correct username or password")
 
         Sentry.captureException(error)
       });
